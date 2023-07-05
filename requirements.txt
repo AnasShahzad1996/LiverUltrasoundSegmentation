@@ -98,6 +98,7 @@ notebook @ file:///croot/notebook_1681756172480/work
 notebook_shim @ file:///croot/notebook-shim_1668160579331/work
 numpy @ file:///home/conda/feedstock_root/build_artifacts/numpy_1682210190296/work
 omegaconf @ file:///home/conda/feedstock_root/build_artifacts/omegaconf_1670575376789/work
+opencv-python==4.8.0.74
 openpyxl==3.1.2
 opt-einsum @ file:///home/conda/feedstock_root/build_artifacts/opt_einsum_1617859230218/work
 packaging @ file:///croot/packaging_1678965309396/work

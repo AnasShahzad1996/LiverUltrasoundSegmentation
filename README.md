@@ -137,7 +137,7 @@ conda activate liver_segmentation
 pip install -r requirements.txt
 ```
 
-# 🖼️ Create your own MLOps Platform
+# 🖼️ Download the ultra-sound dataset
 
 ZenML allows you to create and manage your own MLOps platform using 
 best-in-class open-source and cloud-based technologies. Here is an example of 
