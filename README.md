@@ -67,16 +67,12 @@
   <p align="center">
     This repository contains code to segment ultra-sound images using SOTA self-supervised methods
     <br />
-    <a href="https://docs.zenml.io/"><strong>Explore the docs »</strong></a>
-    <br />
-    <a href="https://zenml.io/features">Features</a>
-    ·    ·
-    <a href="https://github.com/zenml-io/zenml/issues">Report Bug</a>
+    <a href="https://github.com/AnasShahzad1996/liver_ultrasound_segmentation/issues">Report Bug</a>
     ·
     <a href="#-meet-the-team">Meet the Team</a>
     <br />
     🎉 Version 0.1.0 is out. Release notes to be updated soon
-    <a href="https://github.com/zenml-io/zenml/releases">here</a>.
+    <a href="https://github.com/AnasShahzad1996/liver_ultrasound_segmentation/wiki">here</a>.
     <br />
     <br />
     <a href="https://www.linkedin.com/company/tum-camp/?originalSubdomain=de">
