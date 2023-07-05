@@ -58,11 +58,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://zenml.io">
-    <img alt="ZenML Logo" src="https://user-images.githubusercontent.com/3348134/223112746-345126ff-a0e8-479f-8ac0-670d78f71712.png" alt="Logo" width="400">
+  <a href="https://www.cs.cit.tum.de/camp/start/">
+    <img alt="ZenML Logo" src="https://github.com/AnasShahzad1996/liver_ultrasound_segmentation/blob/master/utils/logo.png" alt="Logo" width="400">
   </a>
 
-<h3 align="center">Build portable, production-ready MLOps pipelines.</h3>
+<h3 align="center">Ultrasound image segmentation</h3>
 
   <p align="center">
     This repository contains code to segment ultra-sound images using SOTA self-supervised methods
@@ -81,9 +81,6 @@
     <br />
     <a href="https://www.linkedin.com/company/tum-camp/?originalSubdomain=de">
     <img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555" alt="Logo">
-    </a>
-    <a href="https://www.youtube.com/c/ZenML">
-    <img src="" alt="Logo">
     </a>
   </p>
 </div>
