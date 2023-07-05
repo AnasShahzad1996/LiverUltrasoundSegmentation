@@ -8,8 +8,6 @@
 -->
 
 [![PyPi][pypi-shield]][pypi-url]
-[![PyPi][pypiversion-shield]][pypi-url]
-[![PyPi][downloads-shield]][downloads-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![License][license-shield]][license-url]
 <!-- [![Build][build-shield]][build-url] -->
@@ -34,7 +32,7 @@
 
 [contributors-shield]: https://img.shields.io/github/contributors/zenml-io/zenml?style=for-the-badge
 
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/AnasShahzad1996/liver_ultrasound_segmentation/graphs/contributors
 
 [license-shield]: https://img.shields.io/github/license/zenml-io/zenml?style=for-the-badge
 
@@ -67,40 +65,25 @@
 <h3 align="center">Build portable, production-ready MLOps pipelines.</h3>
 
   <p align="center">
-    A simple yet powerful open-source framework that integrates all your ML tools.
+    This repository contains code to segment ultra-sound images using SOTA self-supervised methods
     <br />
     <a href="https://docs.zenml.io/"><strong>Explore the docs »</strong></a>
     <br />
-    <div align="center">
-      Join our <a href="https://zenml.io/slack-invite" target="_blank">
-      <img width="25" src="https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/306_Slack-512.png" alt="Slack"/>
-    <b>Slack Community</b> </a> and be part of the ZenML family.
-    </div>
-    <br />
     <a href="https://zenml.io/features">Features</a>
-    ·
-    <a href="https://zenml.io/roadmap">Roadmap</a>
-    ·
+    ·    ·
     <a href="https://github.com/zenml-io/zenml/issues">Report Bug</a>
-    ·
-    <a href="https://zenml.io/discussion">Vote New Features</a>
-    ·
-    <a href="https://blog.zenml.io/">Read Blog</a>
     ·
     <a href="#-meet-the-team">Meet the Team</a>
     <br />
-    🎉 Version 0.41.0 is out. Check out the release notes
+    🎉 Version 0.1.0 is out. Release notes to be updated soon
     <a href="https://github.com/zenml-io/zenml/releases">here</a>.
     <br />
     <br />
-    <a href="https://www.linkedin.com/company/zenml/">
+    <a href="https://www.linkedin.com/company/tum-camp/?originalSubdomain=de">
     <img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555" alt="Logo">
     </a>
-    <a href="https://twitter.com/zenml_io">
-    <img src="https://img.shields.io/badge/-Twitter-black.svg?style=for-the-badge&logo=twitter&colorB=555" alt="Logo">
-    </a>
     <a href="https://www.youtube.com/c/ZenML">
-    <img src="https://img.shields.io/badge/-YouTube-black.svg?style=for-the-badge&logo=youtube&colorB=555" alt="Logo">
+    <img src="" alt="Logo">
     </a>
   </p>
 </div>
@@ -110,18 +93,11 @@
   <summary>🏁 Table of Contents</summary>
   <ol>
     <li><a href="#-introduction">Introduction</a></li>
-    <li><a href="#-quickstart">Quickstart</a></li>
+    <li><a href="#-quickstart">Install requirements</a></li>
     <li>
-      <a href="#-create-your-own-mlops-platform">Create your own MLOps Platform</a>
-      <ul>
-        <li><a href="##-1-deploy-zenml">Deploy ZenML</a></li>
-        <li><a href="#-2-deploy-stack-components">Deploy Stack Components</a></li>
-        <li><a href="#-3-create-a-pipeline">Create a Pipeline</a></li>
-        <li><a href="#-4-start-the-dashboard">Start the Dashboard</a></li>
-      </ul>
-    </li>
-    <li><a href="#-roadmap">Roadmap</a></li>
-    <li><a href="#-contributing-and-community">Contributing and Community</a></li>
+      <a href="#-create-your-own-mlops-platform">Download the ultra-sound dataset</a></li>
+    <li><a href="#-roadmap">Literature Review</a></li>
+    <li><a href="#-contributing-and-community">Models and models</a></li>
     <li><a href="#-getting-help">Getting Help</a></li>
     <li><a href="#-license">License</a></li>
   </ol>
