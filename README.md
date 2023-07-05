@@ -126,19 +126,15 @@ infrastructures.
     <img src="docs/book/.gitbook/assets/stack.gif">
 </div>
 
-# 🤸 Quickstart
+# 🤸 Install requirements
 
 [Install ZenML](https://docs.zenml.io/getting-started/installation) via
 [PyPI](https://pypi.org/project/zenml/). Python 3.7 - 3.10 is required:
 
 ```bash
-pip install "zenml[server]"
-```
-
-Take a tour with the guided quickstart by running:
-
-```bash
-zenml go
+conda create --name liver_segmentation
+conda activate liver_segmentation
+pip install -r requirements.txt
 ```
 
 # 🖼️ Create your own MLOps Platform
