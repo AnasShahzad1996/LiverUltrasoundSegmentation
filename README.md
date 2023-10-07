@@ -1,12 +1,4 @@
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-
+# Liver ultrasound Segmentation
 [![PyPi][pypi-shield]][pypi-url]
 [![Contributors][contributors-shield]][contributors-url]
 [![License][license-shield]][license-url]
@@ -59,7 +51,7 @@
 <br />
 <div align="center">
   <a href="https://www.cs.cit.tum.de/camp/start/">
-    <img alt="ZenML Logo" src="https://github.com/AnasShahzad1996/liver_ultrasound_segmentation/blob/master/utils/logo.png" alt="Logo" width="400">
+    <img alt="CAMP logo" src="CS23-images/logo.png" alt="Logo" width="400">
   </a>
 
 <h3 align="center">Ultrasound image segmentation</h3>
@@ -81,198 +73,140 @@
   </p>
 </div>
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>🏁 Table of Contents</summary>
-  <ol>
-    <li><a href="#-introduction">Introduction</a></li>
-    <li><a href="#-quickstart">Install requirements</a></li>
-    <li>
-      <a href="#-create-your-own-mlops-platform">Download the ultra-sound dataset</a></li>
-    <li><a href="#-roadmap">Literature Review</a></li>
-    <li><a href="#-contributing-and-community">Models and models</a></li>
-    <li><a href="#-getting-help">Getting Help</a></li>
-    <li><a href="#-license">License</a></li>
-  </ol>
-</details>
 
-<br />
 
-# 🤖 Introduction
+## Code execution
 
-🤹 ZenML is an extensible, open-source MLOps framework for creating portable,
-production-ready machine learning pipelines. By decoupling infrastructure from
-code, ZenML enables developers across your organization to collaborate more
-effectively as they develop to production.
+Follow these steps to set up and run the code in this repository:
 
-- 💼 ZenML gives data scientists the freedom to fully focus on modeling and
-experimentation while writing code that is production-ready from the get-go.
+1. **Clone the Repository**: First, clone this repository to your local machine using the following command:
+```
+git clone https://github.com/AnasShahzad1996/LiverUltrasoundSegmentation/tree/master
+```
+2. **Download the dataset**: Please download the ultrasound dataset on your machine. You would need to ask [Dr. Yordanka Velikova](https://www.linkedin.com/in/yordanka-velikova-366110a7/?originalSubdomain=de)
+ to grant to access to the annotated dataset.
 
-- 👨‍💻 ZenML empowers ML engineers to take ownership of the entire ML lifecycle
-  end-to-end. Adopting ZenML means fewer handover points and more visibility on
-  what is happening in your organization.
+3. **Create conda repository**: make sure your system has conda installed
+```
+conda create -n liver_ultrasound python=3.7
+conda activate liver_ultrasound
+```
 
-- 🛫 ZenML enables MLOps infrastructure experts to define, deploy, and manage
-sophisticated production environments that are easy to use for colleagues.
-
-![The long journey from experimentation to production.](/docs/book/.gitbook/assets/intro-zenml-overview.png)
-
-ZenML provides a user-friendly syntax designed for ML workflows, compatible with
-any cloud or tool. It enables centralized pipeline management, enabling
-developers to write code once and effortlessly deploy it to various
-infrastructures.
-
-<div align="center">
-    <img src="docs/book/.gitbook/assets/stack.gif">
-</div>
-
-# 🤸 Install requirements
-
-[Install ZenML](https://docs.zenml.io/getting-started/installation) via
-[PyPI](https://pypi.org/project/zenml/). Python 3.7 - 3.10 is required:
-
-```bash
-conda create --name liver_segmentation
-conda activate liver_segmentation
+4. **Navigate to the Project Directory and build requirements**: 
+```
+cd LiverUltrasoundSegmentation
 pip install -r requirements.txt
+pip install matplotlib scikit-image opencv-python yacs joblib natsort h5py tqdm
 ```
 
-# 🖼️ Download the ultra-sound dataset
-
-ZenML allows you to create and manage your own MLOps platform using 
-best-in-class open-source and cloud-based technologies. Here is an example of 
-how you could set this up for your team:
-
-## 🔋 1. Deploy ZenML
-
-For full functionality ZenML should be deployed on the cloud to
-enable collaborative features as the central MLOps interface for teams.
-
-![ZenML Architecture Diagram.](docs/book/.gitbook/assets/Scenario3.png)
-
-In case your machine is authenticated with one of the big three cloud 
-providers, this command will do the full deployment for you.
-
-```bash
-zenml deploy --provider aws  # aws, gcp and azure are supported providers
+5. **SAM-kmeans**: First execute the command by first denoising the images and then running them on SAM
+```
+python3 external_lib/MIRNet/demo.py /path/to/your/image_png 
+python3 scripts/SAM_METHOD.py /path/to/your/image_png 
 ```
 
-You can also choose to deploy with docker or helm with full control over
-the configuration and deployment. Check out the
-[docs](https://docs.zenml.io/platform-guide/set-up-your-mlops-platform/deploy-zenml)
-to find out how.
+6. **Training and inference for UNET and segformer**
+```
+# training 
+python3 src/UNET_train.py /path/to/train_directory /path/to/validation_directory
+python3 src/segtransformer_train.py /path/to/your/input_directory
 
-## 👨‍🍳 2. Deploy Stack Components
-
-ZenML boasts a ton of [integrations](https://zenml.io/integrations) into 
-popular MLOps tools. The [ZenML Stack](https://docs.zenml.io/user-guide/starter-guide/understand-stacks) 
-concept ensures that these tools work nicely together, therefore bringing
-structure and standardization into the MLOps workflow.
-
-Deploying and configuring this is super easy with ZenML. For **AWS**, this might 
-look a bit like this
-
-```bash
-# Deploy and register an orchestrator and an artifact store
-zenml orchestrator deploy kubernetes_orchestrator --flavor kubernetes --cloud aws
-zenml artifact-store deploy s3_artifact_store --flavor s3
-
-# Register this combination of components as a stack
-zenml stack register production_stack --orchestrator kubernetes_orchestrator --artifact-store s3_artifact_store --set # Register your production environment
+#inference
+python3 src/unet_pred.py /path/to/your/test_directory
+python3 src/segtrans_pred.py /path/to/your/test_directory
 ```
 
-When you run a pipeline with this stack set, it will be running on your deployed
-Kubernetes cluster.
+## SAM + k-means
+SAM (Segment anything model) is a vision transformer (ViT) that includes an encoder and decoder. The model can accept various prompts from the user, such as a single point, a collection of points, or a bounding box. It's pre-trained on a large corpus, which equips it with the ability to perform zero-shot semantic segmentation. This means it can predict a valid mask even when the user's prompt is ambiguous. SAM consists of three components: an encoder, a decoder, and a flexible image encoder. The encoder is a MAE pre-trained vision transformer. The mask decoder efficiently maps the image embedding, prompt embeddings, and an output token to a valid mask. Additionally, the flexible image encoder maps the image embedding, prompt embedding, and an output token to a mask. SAM has been employed for unsupervised semantic segmentation in the medical domain. Future work may involve using variants of SAM, such as MedSAM, fine-tuned on medical images, to further improve the task.
 
-You can also [deploy your own tooling manually](https://docs.zenml.io/platform-guide/set-up-your-mlops-platform/deploy-and-set-up-a-cloud-stack)
-or [**create your own MLOps Platform Sandbox**](https://docs.zenml.io/user-guide/advanced-guide/sandbox), 
-a one-click deployment platform for an ephemeral MLOps stack that you can use 
-to run production-ready MLOps pipelines in the cloud.
+![SAM Architecture](CS23-images/11.png)
+*Figure 1: SAM Architecture*
 
-## 🏇 3. Create a Pipeline
-
-Here's an example of a hello world ZenML pipeline in code:
-
-```python
-# run.py
-from zenml import pipeline, step
+For gathering input prompts for bounding boxes, two methods are utilized: k-means clustering and super-pixel resolution. K-means clustering is performed on image pixel intensities, while three super-pixel resolution methods are considered: Felzenszwalb's method, SLIC, and Quickshift. Due to the quality of prompts, super-pixel resolution is not extensively employed.
 
 
-@step
-def step_1() -> str:
-    """Returns the `world` substring."""
-    return "world"
+Furthermore, since SAM is a supervised model, we somehow have to gather input prompts for the bounding boxes. Hence, we choose two methods in order to compute the starting bounding box prompts: k-means clustering and super-pixel resolution. We perform k-means clustering on image pixel intensities. For super-pixel resolution, we use three methods :
+
+    - item Felzenszwalb's method
+    - item SLIC
+    - item Quickshift
+
+Due to the poor quality of prompts, we decided not to work with the super-pixel resolution entirely.
+
+## Pre-processing
+Since ultrasound images contain a lot of noise, we preprocess the images by denoising them by passing them through MIRNet. MIRNet is a residual network with spatial pyramidal pooling that allows low and high-level features to bypass the convolutional layers. We add Gaussian noise with std=10 to our images and then pass them through the network to denoise. We do not quite understand why first adding noise and then denoising leads to better performance. It might be that the nature of the noise in the ultrasound images is different from the Gaussian noise on which the MIRNet is trained. 
+
+![MIRNet](CS23-images/12.png)
+*Figure 2: MIRNet*
+
+## Pipeline
+After preprocessing, k-means clustering is performed on pixel intensities. K-means clustering is an iterative algorithm that updates randomly initiated clusters. Below are the equations that calculate the means clusters of each pixel:
+Distance(xi, cj) = √(Σ(xik - cjk)^2)
+
+Cluster(xi) = argminj Distance(xi, cj)
 
 
-@step
-def step_2(input_one: str, input_two: str) -> None:
-    """Combines the two strings at its input and prints them."""
-    combined_str = input_one + ' ' + input_two
-    print(combined_str)
+![kmeans clustering](CS23-images/13.png)
+*Figure 3: Kmeans-clustering*
+ 
+As you can see the k-means clustering output still has a lot of outliers, hence we predict the connected continuous labels by the CAA algorithm(connected component algorithm). The algorithm for region property analysis in image processing involves connected component analysis (CCA) to identify distinct regions in binary images. Each connected component is labelled, ensuring uniqueness. Various properties such as area, centroid, bounding box, and eccentricity are then computed for each labelled region. The algorithm iterates over all regions, extracting these attributes and storing them in a data structure. By thresholding over the area component, we are able to reduce many outliers. We then pass the components to the SAM model to refine the crude mask returned by the CAA algorithm.
+
+We first segment the top skin layer followed by the detection of the lower peritoneum. The results for the prediction are listed below.
+
+## Additional Experiments
+As an alternative, we also explored and experimented with super-pixel resolution. We explored the Felzenswalb, slic and quick-shift methods respectively. However, as you can see we did not achieve noteworthy results in fig 6. For slic and quick-shift we lose all the spatial information about the image. However, the Felzenswalb method shows a bit of promise and we pass the super-pixels to SAM to refine clustering. However, since the super-pixels overlap and run along y-x direction, SAM is not able to discern which object we are precisely predicting. Which results in faulty detections for Felzenswalb method as well.
+
+![Super-pixel resolution](CS23-images/14.png)
+*Figure 4: Superpixel_res*
 
 
-@pipeline
-def my_pipeline():
-    output_step_one = step_1()
-    step_2(input_one="hello", input_two=output_step_one)
+## Supervised Segmentation Models
+In order to do a comparative study we train UNET and segtransformer on half of the dataset. We then perform inference of the other half of the dataset to if our models are able to learn relevant features that pertain to ultrasound images. 
+
+UNET is a pyramidal pooling network that first downsamples an image to an embedding and then upsamples the embedding to the original image size. We use a kernel size of 3 and downsample the image to around 256 channels. 
+
+![UNET architecure](CS23-images/model_architecture.png)
+*Figure 5: model_arch*
+
+SegTransformer is an advanced neural network architecture designed for semantic segmentation tasks in the field of computer vision. Building upon the foundational concepts of the Transformer architecture, originally developed for natural language processing, SegTransformer adapts these principles for image analysis. It operates by dividing input images into non-overlapping patches, which are then embedded into lower-dimensional vectors. The model leverages multi-head self-attention mechanisms and feedforward networks within its Transformer blocks to capture spatial relationships and contextual information, essential for understanding image content. Positional encoding is employed to maintain spatial information during processing. By stacking multiple layers of these blocks, SegTransformer can extract multi-scale features, enabling it to learn hierarchical image representations, from low-level to high-level features. We use bilinear interpolation to first downsample the image to an acceptable size that the network can process. After that we upsample the prediction to compute the dice and IoU scores.
+
+## Dataset
+
+Our dataset is collected at IFL in Klinikum Rechts der Isar. The curvilinear probe is used to record ultrasound images. We have followed a certain structure to record the ultrasound scans. First, we started at the centre of the body and continued to the right side of the patient. We mainly focus on capturing transverse views to get more clear screenings of vessels. Our dataset contains liver ultrasound images of 15 patients. Our dataset is manually filtered by eliminating all-black and irrelevant images to get better results. We have annotated total of 412 images, approximately 30 frames per patient. We have 5 labels for the ultrasound images: 
+
+- Blood vessels
+- Subcutaneous skin layer
+- Liver
+- Fat deposits
+- Peritoneum (layer enclosed the liver at the bottom)
+
+## Models
+### SAM + kmeans
+
+The results for the SAM + kmeans-related methods are listed below, as you can see denoising the images before the prediction of the class leads to better performance. For super-pixel resolution, we use the Felzenswalb. However the model shows very poor performance across the board and does not detecting the top skin at all.
+
+| Model                          | Dice  | mIoU  |
+|--------------------------------|-------|-------|
+| SAM-Kmeans                     | 0.71  | 0.58  |
+| SAM-Kmeans (no denoising)      | 0.68  | 0.43  |
+| SAM+superpixel resolution      | 0.38  | 0.17  |
 
 
-if __name__ == "__main__":
-    my_pipeline()
-```
+In the figure below we can also see the vessel class is the most widely misclassified class in all of the labels. Vessels are frequently classified as white fat deposits while the liver is frequently misclassified as a peritoneum. However. the overall performance is pretty satisfactory considering the tendency of SAM to predict the top skin much further into into the liver. SAM also suffers from the problem of hallucinating pixels in the dark space around the liver, particularly when it is predicting a mask for a large area. Sometimes our model suffers from misclassifying shadows are blood vessels. 
 
-```bash
-python run.py
-```
+![Confusion matrix](CS23-images/sam_conf.png)
+*Figure 6: model_arch*
 
-## 👭 4. Start the Dashboard
+![Visual results for SAM+kmeans](CS23-images/sam_res.png)
+*Figure 7: sam_kmeans*
 
-Open up the ZenML dashboard using this command.
+### Supervised learning methods
+For our supervised learning models, we implemented the models in pytorch and trained them for 3 hours on an Nvidia 1080Ti GPU. We used a learning rate of 1e-5 with the Adam optimizer. We divided our dataset into 150:50:200 images for train, validation and testing. Finetuning the segformer model from hugging face resulted in the worse performance while UNET was slightly better than the SAM+kmeans method. This reveals that supervised learning methods require a large amount of data to efficiently learn the underlying distribution of the problem. In the future, we could work on few-shot segmentation methods that could utilize the data properly.
 
-```bash
-zenml show
-```
+| Model      | Dice  | mIoU  |
+|------------|-------|-------|
+| Segformer  | 0.28  | 0.11  |
+| UNET       | 0.77  | 0.65  |
 
-![ZenML Dashboard](docs/book/.gitbook/assets/landingpage.png)
-
-# 🗺 Roadmap
-
-ZenML is being built in public. The [roadmap](https://zenml.io/roadmap) is a
-regularly updated source of truth for the ZenML community to understand where
-the product is going in the short, medium, and long term.
-
-ZenML is managed by a [core team](https://zenml.io/company#CompanyTeam) of
-developers that are responsible for making key decisions and incorporating
-feedback from the community. The team oversees feedback via various channels,
-and you can directly influence the roadmap as follows:
-
-- Vote on your most wanted feature on our [Discussion
-  board](https://zenml.io/discussion).
-- Start a thread in our [Slack channel](https://zenml.io/slack-invite).
-- [Create an issue](https://github.com/zenml-io/zenml/issues/new/choose) on our
-  Github repo.
-
-# 🙌 Contributing and Community
-
-We would love to develop ZenML together with our community! Best way to get
-started is to select any issue from the [`good-first-issue`
-label](https://github.com/zenml-io/zenml/labels/good%20first%20issue). If you
-would like to contribute, please review our [Contributing
-Guide](CONTRIBUTING.md) for all relevant details.
-
-# 🆘 Getting Help
-
-The first point of call should
-be [our Slack group](https://zenml.io/slack-invite/).
-Ask your questions about bugs or specific use cases, and someone from
-the [core team](https://zenml.io/company#CompanyTeam) will respond.
-Or, if you
-prefer, [open an issue](https://github.com/zenml-io/zenml/issues/new/choose) on
-our GitHub repo.
-
-# 📜 License
-
-ZenML is distributed under the terms of the Apache License Version 2.0.
-A complete version of the license is available in the [LICENSE](LICENSE) file in
-this repository. Any contribution made to this project will be licensed under
-the Apache License Version 2.0.
+![Confusion matrix for UNET](CS23-images/unet_results.png)
+*Figure 8: conf_unet*
